@@ -39,6 +39,7 @@ def video_processing():
     cap = cv2.VideoCapture('test.mp4')
     if cap.isOpened():
         window_handle = cv2.namedWindow("Border detection", cv2.WINDOW_AUTOSIZE)
+        cv2.moveWindow("Border detection", 0, 30)
 
         while cap.isOpened():
             ret, frame = cap.read()
@@ -52,11 +53,12 @@ def video_processing():
             fps = 1 / (newFrameTime - prevFrameTime)
             prevFrameTime = newFrameTime
             fpsMessage = 'FPS: ' + str(round(fps))
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             #GaussianBlur
-            frame = cv2.GaussianBlur(frame, (3, 3), 0, 0, cv2.BORDER_DEFAULT)
+            gray = cv2.GaussianBlur(gray, (3, 3), 0, 0, cv2.BORDER_DEFAULT)
             #Sobel filter
-            x_deriv = cv2.Sobel(frame, outDepth, 1, 0, ksize=coreSize, scale=scale, delta=delta, borderType=borderType)
-            y_deriv = cv2.Sobel(frame, outDepth, 0, 1, ksize=coreSize, scale=scale, delta=delta, borderType=borderType)
+            x_deriv = cv2.Sobel(gray, outDepth, 1, 0, ksize=coreSize, scale=scale, delta=delta, borderType=borderType)
+            y_deriv = cv2.Sobel(gray, outDepth, 0, 1, ksize=coreSize, scale=scale, delta=delta, borderType=borderType)
 
             x_abs = cv2.convertScaleAbs(x_deriv)
             y_abs =cv2.convertScaleAbs(y_deriv)
@@ -88,7 +90,7 @@ def video_processing():
 
             cv2.putText(resultFrame, modeMessage, filterTypePosition, font, fontScale, fontColor, lineType)
             cv2.putText(resultFrame, fpsMessage, fpsValuePosition, font, fontScale, fontColor, lineType)
-            cv2.imshow('Border detection', resultFrame)
+            cv2.imshow("Border detection", resultFrame)
         cap.release()
         cv2.destroyAllWindows()
     else:
