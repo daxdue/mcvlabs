@@ -23,6 +23,25 @@ void rgb_to_gray(const uint8_t* rgb, uint8_t* gray, int num_pixels)
 	cout << duration << " us" << endl;
 }
 
+void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
+	int j = 0;
+	auto t1 = chrono::high_resolution_clock::now();
+	for(int i = 0; i < num_pixels; ++i, rgb+=3) {
+		uint8_t ch1 = ~rgb[0];
+		uint8_t ch2 = ~rgb[1];
+		uint8_t ch3 = ~rgb[2];
+		*(inverted + j) = ch1;
+		j+=8;
+		*(inverted + j) = ch2;
+		j+=8;
+		*(inverted + j) = ch3;
+		j+=8;
+	}
+	auto t2 = chrono::high_resolution_clock::now();
+	auto duration = chrono::duration_cast<chrono::microseconds>(t2-t1).count();
+	cout << duration << " us" << endl;
+}
+
 void image_invert_neon(const uint8_t* image, uint8_t* inverted, int num_pixels) {
   num_pixels /=8;
 
@@ -32,11 +51,11 @@ void image_invert_neon(const uint8_t* image, uint8_t* inverted, int num_pixels) 
 
     uint8x8x3_t src = vld3_u8(image);
 
-    uint8x8_t t1 = vmvn_u8(src.val[0]);
-    uint8x8_t t2 = vmvn_u8(src.val[1]);
-    uint8x8_t t3 = vmvn_u8(src.val[2]);
+    uint8x8_t ch1 = vmvn_u8(src.val[0]);
+    uint8x8_t ch2 = vmvn_u8(src.val[1]);
+    uint8x8_t ch3 = vmvn_u8(src.val[2]);
 
-		result = {t1, t2, t3};
+		result = {ch1, ch2, ch3};
     vst3_u8(inverted, result);
   }
 }
@@ -72,7 +91,8 @@ int main(int argc,char** argv)
 	inverted_arr_neon = inverted_image_neon.data;
 
 	auto t1_neon = chrono::high_resolution_clock::now();
-  image_invert_neon(rgb_arr, inverted_arr_neon, num_pixels);
+  /*image_invert_neon(rgb_arr, inverted_arr_neon, num_pixels);*/
+	image_invert(rgb_arr, inverted_arr_neon, num_pixels);
 	auto t2_neon = chrono::high_resolution_clock::now();
 
 	auto duration_neon = chrono::duration_cast<chrono::microseconds>(t2_neon-t1_neon).count();
