@@ -10,20 +10,18 @@
 using namespace std;
 using namespace cv;
 
-
+//"Manual" vectorization func
 void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
 	int j = 0;
 	auto t1 = chrono::high_resolution_clock::now();
 	for(int i = 0; i < num_pixels; ++i, rgb+=3, inverted+=3) {
-		uint8_t ch1 = rgb[0];
+		/*uint8_t ch1 = rgb[0];
 		uint8_t ch2 = rgb[1];
 		uint8_t ch3 = rgb[2];
-
-		inverted[0] = ~ch1;
-
-		inverted[1] = ~ch2;
-
-		inverted[2] = ~ch3;
+		*/
+		inverted[0] = ~rgb[0];
+		inverted[1] = ~rgb[1];
+		inverted[2] = ~rgb[2];
 
 	}
 	auto t2 = chrono::high_resolution_clock::now();
@@ -31,6 +29,7 @@ void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
 	cout << duration << " us" << endl;
 }
 
+//Vectorization with neon registers
 void image_invert_neon(const uint8_t* image, uint8_t* inverted, int num_pixels) {
   num_pixels /=8;
 
@@ -39,11 +38,11 @@ void image_invert_neon(const uint8_t* image, uint8_t* inverted, int num_pixels) 
   for(int i = 0; i < num_pixels; ++i, image+=8*3, inverted+=8*3) {
 
     uint8x8x3_t src = vld3_u8(image);
-
+		//Invert each channel
     uint8x8_t ch1 = vmvn_u8(src.val[0]);
     uint8x8_t ch2 = vmvn_u8(src.val[1]);
     uint8x8_t ch3 = vmvn_u8(src.val[2]);
-
+		
 		result = {ch1, ch2, ch3};
     vst3_u8(inverted, result);
   }
