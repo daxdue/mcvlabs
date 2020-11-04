@@ -39,7 +39,7 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
 		uint16x8_t tempRes = vaddq_u16((uint16x8_t)one, (uint16x8_t)wo);
 		temp = vaddq_u16(tempRes, (uint16x8_t)three);
 
-    result = vshrn_n_u16(temp, 8);
+    result = vshrn_n_u16(/*temp*/one, 8);
 
     vst1_u8(inverted, result);
   }
