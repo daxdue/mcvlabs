@@ -29,7 +29,7 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
   uint16x8_t temp;
   uint8x8_t result;
 
-  for(int i = 0; i < num_pixels; ++i, image+=8*3, /*inverted+=8*/*inverted+=8*3) {
+  for(int i = 0; i < num_pixels; ++i, image+=8*3/*, /*inverted+=8*//**inverted+=8*3*/) {
 
     uint8x8x3_t src = vld3_u8(image);
 
@@ -42,6 +42,10 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
     //result = vshrn_n_u16(/*temp*/one, 8);
 
     vst1_u8(inverted, /*result*/one);
+		*inverted+=8;
+		vst1_u8(iverted, two);
+		*inverted+=8;
+		vst1_u8(inverted, three);
   }
 
 
