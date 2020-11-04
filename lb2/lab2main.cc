@@ -79,7 +79,7 @@ int main(int argc,char** argv)
 	cout << "image_invert_neon" << endl;
 	cout << duration_neon << " us" << endl;
 
-	imwrite("invert_neon.png", iverted_image_neon);
+	imwrite("invert_neon.png", inverted_image_neon);
 
     return 0;
 }
