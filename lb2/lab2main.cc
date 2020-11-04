@@ -26,17 +26,17 @@ void rgb_to_gray(const uint8_t* rgb, uint8_t* gray, int num_pixels)
 void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
 	int j = 0;
 	auto t1 = chrono::high_resolution_clock::now();
-	for(int i = 0; i < num_pixels; ++i, rgb+=3) {
+	for(int i = 0; i < num_pixels; ++i, rgb+=3, inverted+=3) {
 		uint8_t ch1 = rgb[0];
 		uint8_t ch2 = rgb[1];
 		uint8_t ch3 = rgb[2];
 
-		inverted[i] = ~ch1;
-		j++;
-		inverted[i+8] = ~ch2;
-		j++;
-		inverted[i+8] = ~ch3;
-		j++;
+		inverted[0] = ~ch1;
+
+		inverted[1] = ~ch2;
+
+		inverted[2] = ~ch3;
+	
 	}
 	auto t2 = chrono::high_resolution_clock::now();
 	auto duration = chrono::duration_cast<chrono::microseconds>(t2-t1).count();
