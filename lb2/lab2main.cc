@@ -69,7 +69,7 @@ int main(int argc,char** argv)
 	int height = rgb_image.rows;
 	int num_pixels = width*height;
 	Mat inverted_image_neon(height, width, CV_8UC3, Scalar(0));
-	inverted_arr_neon = iverted_image_neon.data;
+	inverted_arr_neon = inverted_image_neon.data;
 
 	auto t1_neon = chrono::high_resolution_clock::now();
   image_invert_neon(rgb_arr, inverted_arr_neon, num_pixels);
@@ -79,7 +79,7 @@ int main(int argc,char** argv)
 	cout << "image_invert_neon" << endl;
 	cout << duration_neon << " us" << endl;
 
-	imwrite("invert_neon.png", gray_image_neon);
+	imwrite("invert_neon.png", iverted_image_neon);
 
     return 0;
 }
