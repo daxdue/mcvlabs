@@ -33,9 +33,10 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
 
     uint8x8x3_t src = vld3_u8(image);
 
-    temp = vadd_u16(temp, vmvn_u8(src.val[0]));
-    temp = temp = vadd_u16(temp, vmvn_u8(src.val[1]));
-    temp = temp = vadd_u16(temp, vmvn_u8(src.val[2]));
+    uint8x8_t one = vmvn_u8(src.val[0]);
+    uint8x8_t two = vmvn_u8(src.val[1]);
+    uint8x8_t three = vmvn_u8(src.val[2]);
+
 
     result = vshrn_n_u16(temp, 8);
 
