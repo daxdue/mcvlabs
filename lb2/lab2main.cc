@@ -96,8 +96,8 @@ int main(int argc,char** argv)
 	//auto t2_neon = chrono::high_resolution_clock::now();
 
 	//auto duration_neon = chrono::duration_cast<chrono::microseconds>(t2_neon-t1_neon).count();
-	cout << "image_invert_neon" << endl;
-	cout << duration_neon << " us" << endl;
+	//cout << "image_invert_neon" << endl;
+	//cout << duration_neon << " us" << endl;
 
 	imwrite("invert_neon.png", inverted_image_neon);
 
