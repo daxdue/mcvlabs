@@ -43,7 +43,7 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
 
     vst1_u8(inverted, /*result*/one);
 		*inverted+=8;
-		vst1_u8(iverted, two);
+		vst1_u8(inverted, two);
 		*inverted+=8;
 		vst1_u8(inverted, three);
   }
