@@ -29,7 +29,7 @@ void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
   uint16x8_t temp;
   uint8x8_t result;
 
-  for(int i = 0; i < num_pixels; ++i, rgb+=8*3, inverted+=8) {
+  for(int i = 0; i < num_pixels; ++i, image+=8*3, inverted+=8) {
 
     uint8x8x3_t src = vld3_u8(image);
 
