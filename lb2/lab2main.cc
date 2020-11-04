@@ -90,12 +90,12 @@ int main(int argc,char** argv)
 	Mat inverted_image_neon(height, width, CV_8UC3, Scalar(0));
 	inverted_arr_neon = inverted_image_neon.data;
 
-	auto t1_neon = chrono::high_resolution_clock::now();
+	//auto t1_neon = chrono::high_resolution_clock::now();
   /*image_invert_neon(rgb_arr, inverted_arr_neon, num_pixels);*/
 	image_invert(rgb_arr, inverted_arr_neon, num_pixels);
-	auto t2_neon = chrono::high_resolution_clock::now();
+	//auto t2_neon = chrono::high_resolution_clock::now();
 
-	auto duration_neon = chrono::duration_cast<chrono::microseconds>(t2_neon-t1_neon).count();
+	//auto duration_neon = chrono::duration_cast<chrono::microseconds>(t2_neon-t1_neon).count();
 	cout << "image_invert_neon" << endl;
 	cout << duration_neon << " us" << endl;
 
