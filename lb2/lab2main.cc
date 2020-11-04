@@ -31,12 +31,12 @@ void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
 		uint8_t ch2 = rgb[1];
 		uint8_t ch3 = rgb[2];
 
-		inverted[j] = ~ch1;
-		j+=8;
-		inverted[j] = ~ch2;
-		j+=8;
-		inverted[j] = ~ch3;
-		j+=8;
+		inverted[i] = ~ch1;
+		j++;
+		inverted[i+1] = ~ch2;
+		j++;
+		inverted[i+2] = ~ch3;
+		j++;
 	}
 	auto t2 = chrono::high_resolution_clock::now();
 	auto duration = chrono::duration_cast<chrono::microseconds>(t2-t1).count();
