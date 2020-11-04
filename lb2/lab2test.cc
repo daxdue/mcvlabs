@@ -26,26 +26,22 @@ void rgb_to_gray(const uint8_t* rgb, uint8_t* gray, int num_pixels)
 void image_invert(const uint8_t* image, uint8_t* inverted, int num_pixels) {
   num_pixels /=8;
 
-  uint16x8_t temp;
+  uint8x8_t temp;
   uint8x8_t result;
 
-  for(int i = 0; i < num_pixels; ++i, image+=8*3/*, /*inverted+=8*//**inverted+=8*3*/) {
+  for(int i = 0; i < num_pixels; ++i, image+=8*3, inverted+=8/**inverted+=8*3*/) {
 
     uint8x8x3_t src = vld3_u8(image);
 
     uint8x8_t one = vmvn_u8(src.val[0]);
     uint8x8_t two = vmvn_u8(src.val[1]);
     uint8x8_t three = vmvn_u8(src.val[2]);
-	//	uint16x8_t tempRes = vaddq_u16((uint16x8_t)one, (uint16x8_t)wo);
-		//temp = vaddq_u16(tempRes, (uint16x8_t)three);
+		uint8x8_t tempRes = vaddq_u16(one, two);
+		temp = vaddq_u16(tempRes, three);
 
     //result = vshrn_n_u16(/*temp*/one, 8);
 
-    vst1_u8(inverted, /*result*/one);
-		*inverted+=8;
-		vst1_u8(inverted, two);
-		*inverted+=8;
-		vst1_u8(inverted, three);
+    vst1_u8(inverted, /*result*/temp);
   }
 
 
