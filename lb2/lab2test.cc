@@ -1,7 +1,7 @@
 /*  For description look into the help() function. */
 
-#include "opencv4/core/core.hpp"
-#include "opencv4/highgui/highgui.hpp"
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
 
 #include <iostream>
 #include <arm_neon.h>
@@ -90,7 +90,7 @@ int main(int argc,char** argv)
 	}
 
 	Mat rgb_image;
-	rgb_image = imread(argv[1], CV_LOAD_IMAGE_COLOR);
+	rgb_image = imread(argv[1], /*CV_LOAD_IMAGE_COLOR*/IMREAD_COLOR);
 	if (!rgb_image.data) {
 		cout << "Could not open the image" << endl;
 		return -1;
