@@ -30,11 +30,11 @@ void image_invert(const uint8_t* rgb, uint8_t* inverted, int num_pixels) {
 		uint8_t ch1 = ~rgb[0];
 		uint8_t ch2 = ~rgb[1];
 		uint8_t ch3 = ~rgb[2];
-		inverted + j = ch1;
+		inverted[j] = ch1;
 		j+=8;
-		inverted + j = ch2;
+		inverted[j] = ch2;
 		j+=8;
-		inverted + j = ch3;
+		inverted[j] = ch3;
 		j+=8;
 	}
 	auto t2 = chrono::high_resolution_clock::now();
